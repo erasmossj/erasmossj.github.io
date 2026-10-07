@@ -1,1 +1,78 @@
 @import 'tailwindcss';
+
+/* Dark mode controlado pelo atributo data-theme no <html> (ver BaseLayout). */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/*
+ * Paleta "Pôr do sol" (SCRUM-13). Contraste sobre bg e surface ≥ 4,5:1 em todos os pares de texto.
+ * Tema claro é o padrão do :root; o escuro vale com data-theme="dark" ou, sem JS, pela preferência do sistema.
+ */
+:root {
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --accent: #c2410c;
+  --border: #e7e2da;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #0b1220;
+  --surface: #111a2e;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #ff8a5b;
+  --border: #1e293b;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #0b1220;
+    --surface: #111a2e;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #ff8a5b;
+    --border: #1e293b;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+
+  --font-sans: var(--font-geist);
+  --font-mono: var(--font-geist-mono);
+
+  --radius-card: 0.75rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-bg font-sans text-text antialiased;
+  }
+
+  ::selection {
+    @apply bg-accent text-bg;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+}

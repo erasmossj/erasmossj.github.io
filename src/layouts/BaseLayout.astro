@@ -1,0 +1,100 @@
+---
+import { Font } from 'astro:assets';
+import MobileHeader from '../components/MobileHeader.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { site } from '../data/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${site.name} · Portfólio`,
+  description = `Portfólio de projetos de ${site.fullName}, estudante de Ciência da Computação na UFAL.`,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <title>{title}</title>
+    <Font cssVariable="--font-geist" preload />
+    <Font cssVariable="--font-geist-mono" />
+    <!-- Aplica o tema antes da primeira pintura para não "piscar". -->
+    <script is:inline>
+      (() => {
+        let theme;
+        try {
+          theme = localStorage.getItem('theme');
+        } catch {
+          /* storage bloqueado: usa a preferência do sistema */
+        }
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body class="min-h-dvh">
+    <a
+      href="#conteudo"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-card focus:bg-surface focus:px-4 focus:py-2"
+    >
+      Pular para o conteúdo
+    </a>
+    <MobileHeader />
+    <div class="mx-auto max-w-screen-xl px-6 md:px-12 lg:grid lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-16 lg:px-16">
+      <Sidebar />
+      <main id="conteudo" class="pb-24 lg:py-24">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
+
+<script>
+  // Destaca no menu a seção ativa: a última cujo topo já chegou perto do alto da tela
+  // (ou a última de todas, quando a página chega ao fim).
+  const ACTIVE_OFFSET = 160; // px; maior que o scroll-margin das seções (80–96px)
+  const links = document.querySelectorAll<HTMLAnchorElement>('a[data-nav-link]');
+  const sections = [...document.querySelectorAll<HTMLElement>('main section[id]')];
+
+  function updateActive() {
+    const atBottom = innerHeight + scrollY >= document.documentElement.scrollHeight - 2;
+    let active = sections[0];
+    for (const section of sections) {
+      if (section.getBoundingClientRect().top <= ACTIVE_OFFSET) active = section;
+    }
+    if (atBottom) active = sections[sections.length - 1];
+
+    for (const link of links) {
+      if (link.hash === `#${active?.id}`) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    }
+  }
+
+  let ticking = false;
+  addEventListener(
+    'scroll',
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateActive();
+        ticking = false;
+      });
+    },
+    { passive: true },
+  );
+  updateActive();
+</script>
