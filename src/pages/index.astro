@@ -1,21 +1,25 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import { site } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// O conteúdo de cada seção entra nos Sprints 2 e 3 (SCRUM-20 a SCRUM-23).
+const pending: Record<string, string> = {
+  sobre: 'Sobre mim — em construção (Sprint 2).',
+  destaques: 'Projetos em destaque no bento grid — em construção (Sprint 3).',
+  repositorios: 'Todos os repositórios com filtro por linguagem — em construção (Sprint 3).',
+  skills: 'Linguagens e ferramentas — em construção (Sprint 3).',
+  formacao: 'Ciência da Computação — UFAL. Detalhes em construção (Sprint 3).',
+  contato: 'Formas de contato — em construção (Sprint 3).',
+};
 ---
 
-<Layout>
-  <main class="mx-auto flex min-h-dvh max-w-2xl flex-col justify-center gap-4 px-6">
-    <p class="font-mono text-sm text-teal-300">Olá, eu sou</p>
-    <h1 class="text-4xl font-bold text-slate-50 sm:text-5xl">Erasmo Junior</h1>
-    <p class="text-lg text-slate-300">
-      Estudante de Ciência da Computação na UFAL. Este portfólio está em construção.
-    </p>
-    <p>
-      <a
-        class="text-teal-300 underline underline-offset-4 hover:text-teal-200"
-        href="https://github.com/erasmossj"
-      >
-        Ver meus projetos no GitHub
-      </a>
-    </p>
-  </main>
-</Layout>
+<BaseLayout>
+  {site.nav.map((item, index) => (
+    <Section id={item.id} title={item.label} number={index + 1}>
+      <p class="rounded-card border border-dashed border-border p-6 text-muted">
+        {pending[item.id]}
+      </p>
+    </Section>
+  ))}
+</BaseLayout>
