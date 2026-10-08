@@ -1,13 +1,20 @@
 ---
 import Section from '../components/Section.astro';
+import { projectsConfig } from '../data/projects.config';
+import { reposSnapshot } from '../data/repos';
 import { site } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { mergeProjects } from '../lib/projects';
+
+const { projects, warnings } = mergeProjects(reposSnapshot.repos, projectsConfig);
+for (const warning of warnings) console.warn(`⚠ ${warning}`);
+const featured = projects.filter((project) => project.featured);
 
 // O conteúdo de cada seção entra nos Sprints 2 e 3 (SCRUM-20 a SCRUM-23).
 const pending: Record<string, string> = {
   sobre: 'Sobre mim — em construção (Sprint 2).',
-  destaques: 'Projetos em destaque no bento grid — em construção (Sprint 3).',
-  repositorios: 'Todos os repositórios com filtro por linguagem — em construção (Sprint 3).',
+  destaques: `${featured.length} projetos em destaque no bento grid — em construção (Sprint 3).`,
+  repositorios: `${projects.length} repositórios com filtro por linguagem — em construção (Sprint 3).`,
   skills: 'Linguagens e ferramentas — em construção (Sprint 3).',
   formacao: 'Ciência da Computação — UFAL. Detalhes em construção (Sprint 3).',
   contato: 'Formas de contato — em construção (Sprint 3).',
