@@ -14,6 +14,7 @@ export interface ProjectConfig {
   /** A parte mais difícil do projeto, em um bullet. */
   highlight?: string;
   demoUrl?: string;
+  /** Nome do arquivo de imagem em src/assets/projetos/ (ex.: 'filemetria.png'). */
   image?: string;
 }
 
@@ -23,7 +24,8 @@ export const projectsConfig = [
     repo: 'Filemetria',
     featured: true,
     order: 1,
-    tagline: 'Projeto de computação gráfica feito na Godot, com GDScript e shaders.',
+    tagline:
+      'Jogo 3D na Godot em que o jogador restaura monumentos de Alagoas medindo e estimando áreas.',
     context: 'Computação Gráfica · Prof. Marcelo Costa · IC/UFAL, 2026.2',
   },
   {

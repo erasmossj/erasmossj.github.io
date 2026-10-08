@@ -1,36 +1,49 @@
 ---
 import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import Education from '../components/Education.astro';
+import FeaturedProjects from '../components/FeaturedProjects.astro';
+import RepoList from '../components/RepoList.astro';
 import Section from '../components/Section.astro';
+import Skills from '../components/Skills.astro';
 import { projectsConfig } from '../data/projects.config';
 import { reposSnapshot } from '../data/repos';
 import { site } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { languageFilters } from '../lib/languages';
 import { mergeProjects } from '../lib/projects';
 
 const { projects, warnings } = mergeProjects(reposSnapshot.repos, projectsConfig);
 for (const warning of warnings) console.warn(`⚠ ${warning}`);
 const featured = projects.filter((project) => project.featured);
 
-// O conteúdo das demais seções entra no Sprint 3 (SCRUM-21 a SCRUM-23).
-const pending: Record<string, string> = {
-  destaques: `${featured.length} projetos em destaque no bento grid — em construção (Sprint 3).`,
-  repositorios: `${projects.length} repositórios com filtro por linguagem — em construção (Sprint 3).`,
-  skills: 'Linguagens e ferramentas — em construção (Sprint 3).',
-  formacao: 'Ciência da Computação — UFAL. Detalhes em construção (Sprint 3).',
-  contato: 'Formas de contato — em construção (Sprint 3).',
-};
+// Numeração e títulos das seções seguem o menu.
+const number = (id: string) => site.nav.findIndex((item) => item.id === id) + 1;
+const title = (id: string) => site.nav.find((item) => item.id === id)?.label ?? id;
 ---
 
 <BaseLayout>
-  {site.nav.map((item, index) => (
-    <Section id={item.id} title={item.label} number={index + 1}>
-      {item.id === 'sobre' ? (
-        <About />
-      ) : (
-        <p class="rounded-card border border-dashed border-border p-6 text-muted">
-          {pending[item.id]}
-        </p>
-      )}
-    </Section>
-  ))}
+  <Section id="sobre" title={title('sobre')} number={number('sobre')}>
+    <About />
+  </Section>
+
+  <Section id="destaques" title={title('destaques')} number={number('destaques')}>
+    <FeaturedProjects projects={featured} />
+  </Section>
+
+  <Section id="repositorios" title={title('repositorios')} number={number('repositorios')}>
+    <RepoList {projects} />
+  </Section>
+
+  <Section id="skills" title={title('skills')} number={number('skills')}>
+    <Skills languages={languageFilters(projects)} />
+  </Section>
+
+  <Section id="formacao" title={title('formacao')} number={number('formacao')}>
+    <Education />
+  </Section>
+
+  <Section id="contato" title={title('contato')} number={number('contato')}>
+    <Contact />
+  </Section>
 </BaseLayout>

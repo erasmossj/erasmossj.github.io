@@ -1,0 +1,31 @@
+---
+import type { Project } from '../lib/projects';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  /** Projetos em destaque, já na ordem da curadoria; o primeiro vira o card principal. */
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+// Com o card principal ocupando uma linha inteira, um número par de projetos deixaria o último
+// sozinho na grade de 2 colunas; nesse caso ele também ocupa a linha toda.
+const lastSpansRow = projects.length > 1 && projects.length % 2 === 0;
+---
+
+{projects.length > 0 ? (
+  <ul class="grid gap-4 sm:grid-cols-2">
+    {projects.map((project, index) => (
+      <li
+        class:list={[
+          'flex',
+          (index === 0 || (lastSpansRow && index === projects.length - 1)) && 'sm:col-span-2',
+        ]}
+      >
+        <ProjectCard {project} hero={index === 0} />
+      </li>
+    ))}
+  </ul>
+) : (
+  <p class="text-muted">Nenhum projeto em destaque no momento.</p>
+)}

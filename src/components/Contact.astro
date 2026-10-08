@@ -1,0 +1,53 @@
+---
+import { site } from '../data/site';
+
+const cardClass =
+  'flex h-full flex-col rounded-card border border-border bg-surface p-5 transition-colors hover:border-accent motion-reduce:transition-none';
+const profiles = [
+  { label: 'GitHub', href: site.githubUrl, handle: 'erasmossj' },
+  { label: 'LinkedIn', href: site.linkedinUrl, handle: 'Erasmo Junior' },
+];
+---
+
+<p class="max-w-prose leading-relaxed text-muted">{site.contactPitch}</p>
+
+<ul class="mt-6 grid gap-3 sm:grid-cols-2">
+  {profiles.map((profile) => (
+    <li>
+      <a href={profile.href} target="_blank" rel="noopener noreferrer" class={cardClass}>
+        <span class="font-mono text-xs text-accent">{profile.label}</span>
+        <span class="mt-1 font-semibold">
+          {profile.handle}
+          <span class="sr-only"> (abre em nova aba)</span>
+        </span>
+      </a>
+    </li>
+  ))}
+  {site.emails.map((email) => {
+    // O endereço vai separado para o HTML (proteção básica contra robôs) e o script monta o link.
+    const [user, domain] = email.address.split('@');
+    return (
+      <li>
+        <div class={cardClass} data-email data-user={user} data-domain={domain}>
+          <span class="font-mono text-xs text-accent">{email.label}</span>
+          <span class="mt-1 font-semibold break-all" data-email-text>
+            {user} [arroba] {domain}
+          </span>
+        </div>
+      </li>
+    );
+  })}
+</ul>
+
+<script>
+  for (const placeholder of document.querySelectorAll<HTMLElement>('[data-email]')) {
+    const address = `${placeholder.dataset.user}@${placeholder.dataset.domain}`;
+    const link = document.createElement('a');
+    link.href = `mailto:${address}`;
+    link.className = placeholder.className;
+    link.innerHTML = placeholder.innerHTML;
+    const text = link.querySelector('[data-email-text]');
+    if (text) text.textContent = address;
+    placeholder.replaceWith(link);
+  }
+</script>
