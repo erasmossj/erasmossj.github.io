@@ -1,28 +1,25 @@
 ---
 import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import Education from '../components/Education.astro';
 import FeaturedProjects from '../components/FeaturedProjects.astro';
 import RepoList from '../components/RepoList.astro';
 import Section from '../components/Section.astro';
+import Skills from '../components/Skills.astro';
 import { projectsConfig } from '../data/projects.config';
 import { reposSnapshot } from '../data/repos';
 import { site } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { languageFilters } from '../lib/languages';
 import { mergeProjects } from '../lib/projects';
 
 const { projects, warnings } = mergeProjects(reposSnapshot.repos, projectsConfig);
 for (const warning of warnings) console.warn(`⚠ ${warning}`);
 const featured = projects.filter((project) => project.featured);
 
-// Numeração das seções segue a ordem do menu.
+// Numeração e títulos das seções seguem o menu.
 const number = (id: string) => site.nav.findIndex((item) => item.id === id) + 1;
 const title = (id: string) => site.nav.find((item) => item.id === id)?.label ?? id;
-
-// O conteúdo destas seções entra no próximo item do Sprint 3 (SCRUM-23).
-const pending: Record<string, string> = {
-  skills: 'Linguagens e ferramentas — em construção (Sprint 3).',
-  formacao: 'Ciência da Computação — UFAL. Detalhes em construção (Sprint 3).',
-  contato: 'Formas de contato — em construção (Sprint 3).',
-};
 ---
 
 <BaseLayout>
@@ -38,9 +35,15 @@ const pending: Record<string, string> = {
     <RepoList {projects} />
   </Section>
 
-  {Object.entries(pending).map(([id, text]) => (
-    <Section {id} title={title(id)} number={number(id)}>
-      <p class="rounded-card border border-dashed border-border p-6 text-muted">{text}</p>
-    </Section>
-  ))}
+  <Section id="skills" title={title('skills')} number={number('skills')}>
+    <Skills languages={languageFilters(projects)} />
+  </Section>
+
+  <Section id="formacao" title={title('formacao')} number={number('formacao')}>
+    <Education />
+  </Section>
+
+  <Section id="contato" title={title('contato')} number={number('contato')}>
+    <Contact />
+  </Section>
 </BaseLayout>

@@ -1,0 +1,31 @@
+---
+import { site } from '../data/site';
+import type { LanguageFilter } from '../lib/languages';
+
+interface Props {
+  /** Linguagens principais dos repositórios, da mais usada para a menos. */
+  languages: LanguageFilter[];
+}
+
+const { languages } = Astro.props;
+const groups = [
+  { title: 'Linguagens', items: languages.map((language) => language.name) },
+  { title: 'Ferramentas', items: site.skills.tools },
+  { title: 'Áreas de interesse', items: site.skills.interests },
+];
+---
+
+<div class="grid gap-8 sm:grid-cols-3">
+  {groups.map((group) => (
+    <div>
+      <h3 class="font-mono text-xs font-semibold tracking-widest text-accent uppercase">
+        {group.title}
+      </h3>
+      <ul class="mt-4 flex flex-wrap gap-2">
+        {group.items.map((item) => (
+          <li class="rounded-full border border-border bg-surface px-3 py-1 text-sm">{item}</li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>

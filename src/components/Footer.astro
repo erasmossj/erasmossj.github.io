@@ -14,4 +14,14 @@ const updatedLabel = new Intl.DateTimeFormat('pt-BR', {
     Feito por {site.name} com Astro e Tailwind CSS. Dados do GitHub atualizados em{' '}
     <time datetime={reposSnapshot.generatedAt}>{updatedLabel}</time>.
   </p>
+  <p class="mt-2">
+    <a
+      href={site.sourceUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="underline decoration-border underline-offset-4 transition-colors hover:text-accent motion-reduce:transition-none"
+    >
+      Código-fonte do site<span class="sr-only"> (abre em nova aba)</span>
+    </a>
+  </p>
 </footer>

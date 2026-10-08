@@ -1,0 +1,32 @@
+---
+import { site } from '../data/site';
+
+const { education, competitions } = site;
+---
+
+<div class="grid gap-6 sm:grid-cols-2">
+  <article class="rounded-card border border-border bg-surface p-6">
+    <p class="font-mono text-xs text-accent">{education.period}</p>
+    <h3 class="mt-2 text-lg font-semibold tracking-tight">{education.course}</h3>
+    <p class="mt-1 text-sm text-muted">{education.institution}</p>
+    <h4 class="mt-5 text-sm font-semibold">Disciplinas com projetos neste portfólio</h4>
+    <ul class="mt-2 space-y-1 text-sm text-muted">
+      {education.courses.map((course) => (
+        <li>{course}</li>
+      ))}
+    </ul>
+  </article>
+
+  <article class="rounded-card border border-border bg-surface p-6">
+    <p class="font-mono text-xs text-accent">Programação competitiva</p>
+    <h3 class="mt-2 text-lg font-semibold tracking-tight">Competições</h3>
+    <ul class="mt-4 space-y-4">
+      {competitions.map((competition) => (
+        <li>
+          <p class="text-sm font-semibold">{competition.name}</p>
+          <p class="text-sm text-muted">{competition.detail}</p>
+        </li>
+      ))}
+    </ul>
+  </article>
+</div>
