@@ -3,6 +3,9 @@ name: Deploy
 on:
   push:
     branches: [main]
+  # Rebuild diário para atualizar os dados dos repositórios: 09:00 UTC = 06:00 em Maceió (UTC−3).
+  schedule:
+    - cron: '0 9 * * *'
   workflow_dispatch:
 
 permissions:
