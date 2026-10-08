@@ -9,14 +9,27 @@ Feito com [Astro](https://astro.build), Tailwind CSS e TypeScript, publicado no 
 
 ## Rodando localmente
 
-Requer Node.js 22.12 ou superior.
+Requer Node.js 22.18 ou superior.
 
 ```sh
 npm install
 npm run dev      # servidor local em http://localhost:4321
-npm run build    # gera o site estático em ./dist
+npm run build    # busca os repositórios no GitHub e gera o site estático em ./dist
 npm run preview  # serve o build localmente
 ```
+
+### Dados do GitHub
+
+Antes do build, `scripts/fetch-github.ts` busca os repositórios públicos pela API GraphQL e salva
+em `src/data/repos.json`. A busca precisa de um token em `GITHUB_TOKEN` (no GitHub Actions é usado o
+token automático). Localmente, com o [GitHub CLI](https://cli.github.com):
+
+```sh
+GITHUB_TOKEN=$(gh auth token) npm run build
+```
+
+Sem token, ou se a API falhar, o build usa o último `repos.json` commitado e mostra um aviso. A
+curadoria dos projetos (destaques, ordem e textos) fica em `src/data/projects.config.ts`.
 
 ## Qualidade
 
@@ -24,6 +37,7 @@ npm run preview  # serve o build localmente
 | ---------------------- | ------------------------------------- |
 | `npm run check`        | Verificação de tipos (`astro check`)  |
 | `npm run lint`         | ESLint (incluindo regras de a11y)     |
+| `npm test`             | Testes unitários (Vitest)             |
 | `npm run format`       | Formata o código com Prettier         |
 | `npm run format:check` | Confere a formatação sem alterar nada |
 

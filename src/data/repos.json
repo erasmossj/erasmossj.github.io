@@ -1,0 +1,249 @@
+{
+  "generatedAt": "2026-10-08T16:35:08.348Z",
+  "user": "erasmossj",
+  "repos": [
+    {
+      "name": "erasmossj.github.io",
+      "description": "Portfólio pessoal com meus projetos do GitHub — Astro + Tailwind, publicado no GitHub Pages",
+      "url": "https://github.com/erasmossj/erasmossj.github.io",
+      "homepage": "https://erasmossj.github.io",
+      "languages": [
+        {
+          "name": "Astro",
+          "color": "#ff5a03",
+          "percent": 74.5
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "percent": 10.8
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "percent": 9.1
+        },
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "percent": 5.6
+        }
+      ],
+      "topics": [],
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "pushedAt": "2026-10-07T22:53:28Z",
+      "pinned": false
+    },
+    {
+      "name": "Filemetria",
+      "description": "Projeto da disciplina de Computação Gráfica no período 2026.2 ministrada pelo professor Marcelo Costa no Instituto de Computação da Universidade Federal de Alagoas (IC/UFAL)",
+      "url": "https://github.com/erasmossj/Filemetria",
+      "homepage": null,
+      "languages": [
+        {
+          "name": "GDScript",
+          "color": "#355570",
+          "percent": 94.8
+        },
+        {
+          "name": "GDShader",
+          "color": "#478CBF",
+          "percent": 5.2
+        }
+      ],
+      "topics": [],
+      "stars": 1,
+      "forks": 0,
+      "isFork": false,
+      "pushedAt": "2026-10-07T22:21:46Z",
+      "pinned": false
+    },
+    {
+      "name": "competitive-programming",
+      "description": "upsolving icpc questions",
+      "url": "https://github.com/erasmossj/competitive-programming",
+      "homepage": null,
+      "languages": [
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "percent": 100
+        }
+      ],
+      "topics": [],
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "pushedAt": "2026-09-07T13:35:11Z",
+      "pinned": false
+    },
+    {
+      "name": "algoritmos-de-grafos",
+      "description": null,
+      "url": "https://github.com/erasmossj/algoritmos-de-grafos",
+      "homepage": null,
+      "languages": [
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "percent": 83
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "percent": 12.3
+        },
+        {
+          "name": "Makefile",
+          "color": "#427819",
+          "percent": 4.8
+        }
+      ],
+      "topics": [],
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "pushedAt": "2026-09-06T00:26:56Z",
+      "pinned": false
+    },
+    {
+      "name": "jackut",
+      "description": null,
+      "url": "https://github.com/erasmossj/jackut",
+      "homepage": null,
+      "languages": [
+        {
+          "name": "Java",
+          "color": "#b07219",
+          "percent": 100
+        }
+      ],
+      "topics": [],
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "pushedAt": "2026-06-27T00:21:29Z",
+      "pinned": false
+    },
+    {
+      "name": "MyFood-2026.1",
+      "description": "Projeto da disciplina de Programação 2 ministrada pelo professor Mário Hozano no IC/UFAL.",
+      "url": "https://github.com/erasmossj/MyFood-2026.1",
+      "homepage": null,
+      "languages": [
+        {
+          "name": "Java",
+          "color": "#b07219",
+          "percent": 100
+        }
+      ],
+      "topics": [],
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "pushedAt": "2026-05-17T17:29:06Z",
+      "pinned": false
+    },
+    {
+      "name": "EDA-Delhi-Air-Quality-Dataset",
+      "description": "This project conducts an in-depth exploratory data analysis (EDA) of the Delhi Air Quality dataset using R Markdown. The analysis explores pollutant levels, temporal trends, and correlations between environmental factors, while integrating code, visualizations, and narrative in a single reproducible document.",
+      "url": "https://github.com/erasmossj/EDA-Delhi-Air-Quality-Dataset",
+      "homepage": null,
+      "languages": [],
+      "topics": [],
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "pushedAt": "2025-08-13T12:49:26Z",
+      "pinned": false
+    },
+    {
+      "name": "Classificador-Basico-Usando-Iris-Dataset",
+      "description": null,
+      "url": "https://github.com/erasmossj/Classificador-Basico-Usando-Iris-Dataset",
+      "homepage": null,
+      "languages": [
+        {
+          "name": "Jupyter Notebook",
+          "color": "#DA5B0B",
+          "percent": 99.6
+        },
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "percent": 0.4
+        }
+      ],
+      "topics": [],
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "pushedAt": "2025-06-23T12:26:33Z",
+      "pinned": false
+    },
+    {
+      "name": "Segundo-Projeto-Estrutura-de-Dados-2025",
+      "description": "Projeto de alocação de oferta de disciplinas do IC/UFAL para a disciplina de Estrutura de Dado do curso de CIência da Computação do IC/UFAL.",
+      "url": "https://github.com/erasmossj/Segundo-Projeto-Estrutura-de-Dados-2025",
+      "homepage": null,
+      "languages": [
+        {
+          "name": "C",
+          "color": "#555555",
+          "percent": 100
+        }
+      ],
+      "topics": [],
+      "stars": 0,
+      "forks": 0,
+      "isFork": false,
+      "pushedAt": "2025-06-04T00:39:37Z",
+      "pinned": false
+    },
+    {
+      "name": "Discord-Chat-Bot",
+      "description": "Discord bot integrated with Google Gemini AI that responds to messages, stores user and channel-specific chat history, and manages interaction records using a database. Ideal for experimental applications with LLMs in Discord servers.  ⚠️ Comments and explanations were translated by AI, but the code was authored by Erasmo da Silva Sá Junior.",
+      "url": "https://github.com/erasmossj/Discord-Chat-Bot",
+      "homepage": null,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "percent": 100
+        }
+      ],
+      "topics": [],
+      "stars": 2,
+      "forks": 0,
+      "isFork": false,
+      "pushedAt": "2025-05-03T17:39:23Z",
+      "pinned": false
+    },
+    {
+      "name": "Projeto-Criptografia-RSA-Matematica-Discreta",
+      "description": "Este repositório contém o programa de criptografia baseado no algoritmo de RSA desenvolvido pelos autores para a disciplina de matemática discreta, ministrada pelo professor Bruno Pimentel no Instituto de Computação da UFAL (IC/UFAL).",
+      "url": "https://github.com/erasmossj/Projeto-Criptografia-RSA-Matematica-Discreta",
+      "homepage": null,
+      "languages": [
+        {
+          "name": "C",
+          "color": "#555555",
+          "percent": 89.4
+        },
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "percent": 10.6
+        }
+      ],
+      "topics": [],
+      "stars": 2,
+      "forks": 0,
+      "isFork": false,
+      "pushedAt": "2024-12-08T14:43:30Z",
+      "pinned": false
+    }
+  ]
+}
