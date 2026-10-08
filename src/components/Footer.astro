@@ -1,0 +1,17 @@
+---
+import { reposSnapshot } from '../data/repos';
+import { site } from '../data/site';
+
+const updatedAt = new Date(reposSnapshot.generatedAt);
+const updatedLabel = new Intl.DateTimeFormat('pt-BR', {
+  dateStyle: 'long',
+  timeZone: 'America/Maceio',
+}).format(updatedAt);
+---
+
+<footer class="mt-12 border-t border-border pt-8 text-sm text-muted">
+  <p>
+    Feito por {site.name} com Astro e Tailwind CSS. Dados do GitHub atualizados em{' '}
+    <time datetime={reposSnapshot.generatedAt}>{updatedLabel}</time>.
+  </p>
+</footer>

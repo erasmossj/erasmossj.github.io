@@ -1,0 +1,9 @@
+---
+import { site } from '../data/site';
+---
+
+<div class="max-w-prose space-y-4 leading-relaxed text-muted">
+  {site.about.map((paragraph) => (
+    <p>{paragraph}</p>
+  ))}
+</div>

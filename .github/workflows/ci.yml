@@ -25,7 +25,11 @@ jobs:
       - run: npm run check
       - run: npm run lint
       - run: npm run format:check
+      - run: npm test
       - run: npm run build
+        env:
+          # Token automático do Actions: basta para ler os repositórios públicos via GraphQL.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Lighthouse CI
         uses: treosh/lighthouse-ci-action@12.6.2
         with:
