@@ -51,10 +51,9 @@ import ThemeToggle from './ThemeToggle.astro';
     </nav>
   </div>
 
-  <div class="mt-8 flex items-center justify-between">
+  <!-- Só no desktop: no mobile o tema fica no cabeçalho e o GitHub já está no CTA acima. -->
+  <div class="mt-8 hidden items-center justify-between lg:flex">
     <SocialLinks />
-    <div class="hidden lg:block">
-      <ThemeToggle />
-    </div>
+    <ThemeToggle />
   </div>
 </header>
