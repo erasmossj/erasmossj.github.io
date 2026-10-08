@@ -1,5 +1,6 @@
 ---
 import About from '../components/About.astro';
+import FeaturedProjects from '../components/FeaturedProjects.astro';
 import Section from '../components/Section.astro';
 import { projectsConfig } from '../data/projects.config';
 import { reposSnapshot } from '../data/repos';
@@ -11,9 +12,12 @@ const { projects, warnings } = mergeProjects(reposSnapshot.repos, projectsConfig
 for (const warning of warnings) console.warn(`⚠ ${warning}`);
 const featured = projects.filter((project) => project.featured);
 
-// O conteúdo das demais seções entra no Sprint 3 (SCRUM-21 a SCRUM-23).
+// Numeração das seções segue a ordem do menu.
+const number = (id: string) => site.nav.findIndex((item) => item.id === id) + 1;
+const title = (id: string) => site.nav.find((item) => item.id === id)?.label ?? id;
+
+// O conteúdo destas seções entra nos próximos itens do Sprint 3 (SCRUM-22 e SCRUM-23).
 const pending: Record<string, string> = {
-  destaques: `${featured.length} projetos em destaque no bento grid — em construção (Sprint 3).`,
   repositorios: `${projects.length} repositórios com filtro por linguagem — em construção (Sprint 3).`,
   skills: 'Linguagens e ferramentas — em construção (Sprint 3).',
   formacao: 'Ciência da Computação — UFAL. Detalhes em construção (Sprint 3).',
@@ -22,15 +26,17 @@ const pending: Record<string, string> = {
 ---
 
 <BaseLayout>
-  {site.nav.map((item, index) => (
-    <Section id={item.id} title={item.label} number={index + 1}>
-      {item.id === 'sobre' ? (
-        <About />
-      ) : (
-        <p class="rounded-card border border-dashed border-border p-6 text-muted">
-          {pending[item.id]}
-        </p>
-      )}
+  <Section id="sobre" title={title('sobre')} number={number('sobre')}>
+    <About />
+  </Section>
+
+  <Section id="destaques" title={title('destaques')} number={number('destaques')}>
+    <FeaturedProjects projects={featured} />
+  </Section>
+
+  {Object.entries(pending).map(([id, text]) => (
+    <Section {id} title={title(id)} number={number(id)}>
+      <p class="rounded-card border border-dashed border-border p-6 text-muted">{text}</p>
     </Section>
   ))}
 </BaseLayout>

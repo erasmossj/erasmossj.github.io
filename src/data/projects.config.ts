@@ -14,6 +14,7 @@ export interface ProjectConfig {
   /** A parte mais difícil do projeto, em um bullet. */
   highlight?: string;
   demoUrl?: string;
+  /** Nome do arquivo de imagem em src/assets/projetos/ (ex.: 'filemetria.png'). */
   image?: string;
 }
 
