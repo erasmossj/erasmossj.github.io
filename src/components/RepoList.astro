@@ -1,0 +1,128 @@
+---
+import { languageFilters, primaryLanguage, sortByPushedAt } from '../lib/languages';
+import type { Project } from '../lib/projects';
+
+interface Props {
+  projects: Project[];
+}
+
+const repos = sortByPushedAt(Astro.props.projects);
+const filters = languageFilters(repos);
+const dateFormat = new Intl.DateTimeFormat('pt-BR', {
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'America/Maceio',
+});
+const chipClass =
+  'inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1 text-sm text-muted transition-colors hover:text-text aria-pressed:border-accent aria-pressed:text-accent motion-reduce:transition-none';
+---
+
+{repos.length === 0 ? (
+  <p class="text-muted">Nenhum repositório público encontrado.</p>
+) : (
+  <div data-repo-browser>
+    {/* Oculto até o script carregar: sem JS a lista mostra todos os repositórios. */}
+    <div
+      class="mb-6 flex flex-wrap gap-2"
+      role="group"
+      aria-label="Filtrar por linguagem"
+      data-repo-filters
+      hidden
+    >
+      <button type="button" class={chipClass} aria-pressed="true" data-language="">
+        Todas <span class="font-mono text-xs">{repos.length}</span>
+      </button>
+      {filters.map((filter) => (
+        <button type="button" class={chipClass} aria-pressed="false" data-language={filter.name}>
+          <span
+            class="size-2 rounded-full"
+            style={{ backgroundColor: filter.color ?? 'var(--muted)' }}
+            aria-hidden="true"
+          />
+          {filter.name} <span class="font-mono text-xs">{filter.count}</span>
+        </button>
+      ))}
+    </div>
+    <p class="sr-only" aria-live="polite" data-repo-status></p>
+
+    <ul class="divide-y divide-border border-y border-border" data-repo-list>
+      {repos.map((repo) => {
+        const language = primaryLanguage(repo);
+        return (
+          <li class="py-4" data-language={language?.name ?? ''}>
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <a
+                href={repo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-semibold transition-colors hover:text-accent motion-reduce:transition-none"
+              >
+                {repo.repo}
+                <span class="sr-only"> (abre em nova aba)</span>
+              </a>
+              <span class="font-mono text-xs text-muted">
+                atualizado em{' '}
+                <time datetime={repo.pushedAt}>{dateFormat.format(new Date(repo.pushedAt))}</time>
+              </span>
+            </div>
+            {repo.tagline && (
+              <p class="mt-1 line-clamp-2 text-sm leading-relaxed text-muted">{repo.tagline}</p>
+            )}
+            <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
+              {language && (
+                <span class="flex items-center gap-1.5">
+                  <span
+                    class="size-2 rounded-full"
+                    style={{ backgroundColor: language.color ?? 'var(--muted)' }}
+                    aria-hidden="true"
+                  />
+                  {language.name}
+                </span>
+              )}
+              {repo.stars > 0 && (
+                <span>
+                  <span aria-hidden="true">★</span> {repo.stars}
+                  <span class="sr-only"> estrelas</span>
+                </span>
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+    <p class="mt-4 text-muted" data-repo-empty hidden>
+      Nenhum repositório nessa linguagem.
+    </p>
+  </div>
+)}
+
+<script>
+  // Filtro por linguagem: mostra só os itens cuja linguagem principal é a escolhida.
+  for (const browser of document.querySelectorAll<HTMLElement>('[data-repo-browser]')) {
+    const group = browser.querySelector<HTMLElement>('[data-repo-filters]');
+    const status = browser.querySelector<HTMLElement>('[data-repo-status]');
+    const empty = browser.querySelector<HTMLElement>('[data-repo-empty]');
+    const buttons = [...browser.querySelectorAll<HTMLButtonElement>('[data-repo-filters] button')];
+    const items = [...browser.querySelectorAll<HTMLElement>('[data-repo-list] > li')];
+    if (!group) continue;
+
+    group.hidden = false;
+    group.addEventListener('click', (event) => {
+      const button = (event.target as Element).closest('button');
+      if (!button) return;
+      const language = button.dataset.language ?? '';
+
+      for (const other of buttons) other.setAttribute('aria-pressed', String(other === button));
+      let visible = 0;
+      for (const item of items) {
+        const show = !language || item.dataset.language === language;
+        item.hidden = !show;
+        if (show) visible += 1;
+      }
+      if (empty) empty.hidden = visible > 0;
+      if (status) {
+        status.textContent = `${visible} repositório${visible === 1 ? '' : 's'}${language ? ` em ${language}` : ''}`;
+      }
+    });
+  }
+</script>
