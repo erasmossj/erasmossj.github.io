@@ -28,7 +28,6 @@ export const site = {
   githubUrl,
   linkedinUrl,
   sourceUrl: 'https://github.com/erasmossj/erasmossj.github.io',
-  // Textos provisórios: a versão final é escrita por mim (Guia de Conteúdo, SCRUM-20).
   pitch: 'Construo projetos de algoritmos, computação gráfica e bots com IA.',
   about: [
     'Sou estudante de Ciência da Computação no Instituto de Computação da UFAL, em Maceió. Gosto de entender como as coisas funcionam por dentro e de transformar o que aprendo nas disciplinas em projetos que dá para rodar e mostrar.',
@@ -49,7 +48,6 @@ export const site = {
   ] satisfies SocialLink[],
 
   // As linguagens da seção Skills vêm dos repositórios; estas listas são manuais.
-  // Rascunho (SCRUM-23): revisar ferramentas e áreas de interesse.
   skills: {
     tools: [
       'Git e GitHub',
@@ -85,7 +83,7 @@ export const site = {
     },
     { name: '1ª Maratona Nordestina de Programação', detail: '2026' },
   ] satisfies Competition[],
-  // Rascunho (SCRUM-23): frase de abertura da seção Contato.
+  // Frase de abertura da seção Contato.
   contactPitch:
     'Quer conversar sobre um projeto, uma vaga ou programação competitiva? Me chame por aqui.',
   emails: [
