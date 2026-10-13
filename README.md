@@ -38,11 +38,18 @@ curadoria dos projetos (destaques, ordem e textos) fica em `src/data/projects.co
 | `npm run check`        | Verificação de tipos (`astro check`)  |
 | `npm run lint`         | ESLint (incluindo regras de a11y)     |
 | `npm test`             | Testes unitários (Vitest)             |
+| `npm run test:e2e`     | E2E de fumaça e axe (Playwright)      |
 | `npm run format`       | Formata o código com Prettier         |
 | `npm run format:check` | Confere a formatação sem alterar nada |
 
+Os testes E2E rodam contra o build: faça `npm run build` antes. Na primeira vez, instale o navegador
+com `npx playwright install chromium`.
+
 O CI roda essas verificações em todo pull request, mais o Lighthouse CI com nota mínima de 95 em
 Performance, Acessibilidade, Boas Práticas e SEO.
+
+A imagem de compartilhamento (`public/og.png`) é gerada por `node scripts/og-image.ts`; rode de novo
+se o nome, o título ou o pitch em `src/data/site.ts` mudarem.
 
 ## Estrutura
 
