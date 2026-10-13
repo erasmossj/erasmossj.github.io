@@ -4,6 +4,7 @@ import Footer from '../components/Footer.astro';
 import MobileHeader from '../components/MobileHeader.astro';
 import Sidebar from '../components/Sidebar.astro';
 import { site } from '../data/site';
+import { personJsonLd, serializeJsonLd } from '../lib/seo';
 import '../styles/global.css';
 
 interface Props {
@@ -15,6 +16,12 @@ const {
   title = `${site.name} · Portfólio`,
   description = `Portfólio de projetos de ${site.fullName}, estudante de Ciência da Computação na UFAL.`,
 } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+// Imagem de compartilhamento 1200×630, gerada por scripts/og-image.ts.
+const ogImage = new URL('/og.png', Astro.site);
+const ogImageAlt = `${site.name} · ${site.role}`;
+const jsonLd = serializeJsonLd(personJsonLd(site, new URL('/', Astro.site).href));
 ---
 
 <!doctype html>
@@ -26,8 +33,28 @@ const {
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <title>{title}</title>
+
+    <!-- Prévia ao compartilhar o link (LinkedIn, WhatsApp, X etc.). -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+    <script type="application/ld+json" set:html={jsonLd} />
     <Font cssVariable="--font-geist" preload />
     <Font cssVariable="--font-geist-mono" />
     <!-- Aplica o tema antes da primeira pintura para não "piscar". -->

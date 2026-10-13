@@ -11,7 +11,7 @@ const { class: className } = Astro.props;
   data-theme-toggle
   aria-label="Alternar tema claro/escuro"
   class:list={[
-    'inline-flex size-10 items-center justify-center rounded-full text-muted transition-colors hover:text-accent',
+    'inline-flex size-10 items-center justify-center rounded-full text-muted transition-colors hover:text-accent motion-reduce:transition-none',
     className,
   ]}
 >

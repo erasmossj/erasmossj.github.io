@@ -1,11 +1,13 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
   // Site de usuário do GitHub Pages: servido na raiz, sem `base`.
   site: 'https://erasmossj.github.io',
+  integrations: [sitemap()],
   // Fontes baixadas no build e servidas pelo próprio site (sem requisição a terceiros).
   fonts: [
     {

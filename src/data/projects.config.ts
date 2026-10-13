@@ -18,7 +18,6 @@ export interface ProjectConfig {
   image?: string;
 }
 
-// Rascunho: textos a revisar e completar por mim (Guia de Conteúdo, SCRUM-8).
 export const projectsConfig = [
   {
     repo: 'Filemetria',
