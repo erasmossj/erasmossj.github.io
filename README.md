@@ -48,17 +48,25 @@ com `npx playwright install chromium`.
 O CI roda essas verificações em todo pull request, mais o Lighthouse CI com nota mínima de 95 em
 Performance, Acessibilidade, Boas Práticas e SEO.
 
-A imagem de compartilhamento (`public/og.png`) é gerada por `node scripts/og-image.ts`; rode de novo
-se o nome, o título ou o pitch em `src/data/site.ts` mudarem.
+As imagens de compartilhamento (`public/og.png` e `public/og-en.png`) são geradas por
+`node scripts/og-image.ts`; rode de novo se o nome, o título ou o pitch em `src/data/site.ts` mudarem.
+
+## Idiomas
+
+O site tem versão em português em `/` e em inglês em `/en/` (i18n nativo do Astro). Os textos da
+interface ficam em `src/lib/i18n.ts`; os de conteúdo, em `src/data/site.ts` e na curadoria
+(`src/data/projects.config.ts`), no formato `{ pt, en }`. Um teste falha se alguma chave da
+interface ficar sem tradução.
 
 ## Estrutura
 
 ```text
 src/
 ├── components/   componentes reutilizáveis
-├── data/         dados dos repositórios e curadoria dos projetos
+├── data/         dados dos repositórios, textos do site e curadoria dos projetos
 ├── layouts/      layout base das páginas
-├── pages/        rotas do site
+├── lib/          lógica pura (dados do GitHub, curadoria, idiomas, SEO) e seus testes
+├── pages/        rotas do site (/ e /en/)
 └── styles/       CSS global e tokens do Tailwind
 ```
 

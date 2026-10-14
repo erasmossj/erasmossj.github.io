@@ -1,5 +1,8 @@
 ---
 import { site } from '../data/site';
+import { getLang, useTranslations } from '../lib/i18n';
+
+const t = useTranslations(getLang(Astro.currentLocale));
 
 // Ícones (24x24) por rede; redes sem ícone aparecem como texto.
 const icons: Record<string, string> = {
@@ -10,7 +13,7 @@ const icons: Record<string, string> = {
 };
 ---
 
-<ul class="flex items-center gap-5" aria-label="Redes">
+<ul class="flex items-center gap-5" aria-label={t('socials.label')}>
   {site.socials.map((social) => (
     <li>
       <a
@@ -18,7 +21,7 @@ const icons: Record<string, string> = {
         class="text-muted transition-colors hover:text-accent motion-reduce:transition-none"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`${social.label} (abre em nova aba)`}
+        aria-label={`${social.label} ${t('a11y.newTab')}`}
       >
         {icons[social.label] ? (
           <svg class="size-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

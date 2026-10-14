@@ -1,9 +1,12 @@
 ---
 import { site } from '../data/site';
+import { getLang, localize } from '../lib/i18n';
+
+const lang = getLang(Astro.currentLocale);
 ---
 
 <div class="max-w-prose space-y-4 leading-relaxed text-muted">
-  {site.about.map((paragraph) => (
+  {localize(site.about, lang).map((paragraph) => (
     <p>{paragraph}</p>
   ))}
 </div>

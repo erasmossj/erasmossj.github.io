@@ -1,0 +1,56 @@
+---
+// Página inicial, a mesma em todos os idiomas: o idioma vem da rota (Astro.currentLocale).
+import { projectsConfig } from '../data/projects.config';
+import { reposSnapshot } from '../data/repos';
+import { site } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { defaultLang, getLang, localize } from '../lib/i18n';
+import { languageFilters } from '../lib/languages';
+import { mergeProjects } from '../lib/projects';
+import About from './About.astro';
+import Contact from './Contact.astro';
+import Education from './Education.astro';
+import FeaturedProjects from './FeaturedProjects.astro';
+import RepoList from './RepoList.astro';
+import Section from './Section.astro';
+import Skills from './Skills.astro';
+
+const lang = getLang(Astro.currentLocale);
+const { projects, warnings } = mergeProjects(reposSnapshot.repos, projectsConfig, lang);
+// Os avisos são iguais nos dois idiomas: mostra uma vez só no build.
+if (lang === defaultLang) for (const warning of warnings) console.warn(`⚠ ${warning}`);
+const featured = projects.filter((project) => project.featured);
+
+// Numeração e títulos das seções seguem o menu.
+const number = (id: string) => site.nav.findIndex((item) => item.id === id) + 1;
+const title = (id: string) => {
+  const item = site.nav.find((entry) => entry.id === id);
+  return item ? localize(item.label, lang) : id;
+};
+---
+
+<BaseLayout>
+  <Section id="sobre" title={title('sobre')} number={number('sobre')}>
+    <About />
+  </Section>
+
+  <Section id="destaques" title={title('destaques')} number={number('destaques')}>
+    <FeaturedProjects projects={featured} />
+  </Section>
+
+  <Section id="repositorios" title={title('repositorios')} number={number('repositorios')}>
+    <RepoList {projects} />
+  </Section>
+
+  <Section id="skills" title={title('skills')} number={number('skills')}>
+    <Skills languages={languageFilters(projects)} />
+  </Section>
+
+  <Section id="formacao" title={title('formacao')} number={number('formacao')}>
+    <Education />
+  </Section>
+
+  <Section id="contato" title={title('contato')} number={number('contato')}>
+    <Contact />
+  </Section>
+</BaseLayout>

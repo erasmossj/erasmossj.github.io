@@ -1,18 +1,19 @@
-// Gera public/og.png (1200×630), a prévia do link ao compartilhar o site (SCRUM-25).
-// Rodar só quando o nome, o título ou o pitch mudarem: `node scripts/og-image.ts`. A imagem fica commitada.
+// Gera as imagens de compartilhamento 1200×630 de cada idioma em public/ (SCRUM-25, SCRUM-31).
+// Rodar só quando o nome, o título ou o pitch mudarem: `node scripts/og-image.ts`. As imagens ficam commitadas.
 import { chromium } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
 import { site } from '../src/data/site.ts';
+import { htmlLang, languages, localize, type Lang } from '../src/lib/i18n.ts';
+import { ogImagePath } from '../src/lib/seo.ts';
 
-const OUTPUT = fileURLToPath(new URL('../public/og.png', import.meta.url));
 const FONT = (family: string) =>
   `https://cdn.jsdelivr.net/fontsource/fonts/${family}:vf@latest/latin-wght-normal.woff2`;
 
 const escape = (text: string) => text.replace(/[&<>"]/g, (char) => `&#${char.charCodeAt(0)};`);
 
 // Paleta "Pôr do sol", tema escuro (mesmos valores de src/styles/global.css).
-const html = `<!doctype html>
-<html lang="pt-BR">
+const html = (lang: Lang) => `<!doctype html>
+<html lang="${htmlLang[lang]}">
 <head>
 <meta charset="utf-8" />
 <style>
@@ -36,8 +37,8 @@ const html = `<!doctype html>
   <p class="url">erasmossj.github.io</p>
   <div>
     <h1>${escape(site.name)}</h1>
-    <p class="role">${escape(site.role)}</p>
-    <p class="pitch">${escape(site.pitch)}</p>
+    <p class="role">${escape(localize(site.role, lang))}</p>
+    <p class="pitch">${escape(localize(site.pitch, lang))}</p>
   </div>
   <div class="bar"></div>
 </body>
@@ -46,10 +47,13 @@ const html = `<!doctype html>
 const browser = await chromium.launch();
 try {
   const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
-  await page.setContent(html, { waitUntil: 'networkidle' });
-  await page.evaluate(() => document.fonts.ready);
-  await page.screenshot({ path: OUTPUT, type: 'png' });
-  console.log(`✓ ${OUTPUT}`);
+  for (const lang of languages) {
+    const output = fileURLToPath(new URL(`../public${ogImagePath(lang)}`, import.meta.url));
+    await page.setContent(html(lang), { waitUntil: 'networkidle' });
+    await page.evaluate(() => document.fonts.ready);
+    await page.screenshot({ path: output, type: 'png' });
+    console.log(`✓ ${output}`);
+  }
 } finally {
   await browser.close();
 }

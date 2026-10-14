@@ -1,11 +1,19 @@
 import { describe, expect, it } from 'vitest';
-import { personJsonLd, serializeJsonLd, type PersonSource } from './seo.ts';
+import { ogImagePath, personJsonLd, serializeJsonLd, type PersonSource } from './seo.ts';
+
+describe('ogImagePath', () => {
+  it('usa og.png no idioma padrão e og-<idioma>.png nos demais', () => {
+    expect(ogImagePath('pt')).toBe('/og.png');
+    expect(ogImagePath('en')).toBe('/og-en.png');
+  });
+});
 
 const source: PersonSource = {
   name: 'Erasmo Junior',
   fullName: 'Erasmo da Silva Sá Junior',
-  education: { institution: 'Universidade Federal de Alagoas' },
-  socials: [{ href: 'https://github.com/erasmossj' }, { href: 'https://www.linkedin.com/in/x/' }],
+  jobTitle: 'Computer Science student',
+  institution: 'Universidade Federal de Alagoas',
+  sameAs: ['https://github.com/erasmossj', 'https://www.linkedin.com/in/x/'],
 };
 
 describe('personJsonLd', () => {
@@ -18,6 +26,7 @@ describe('personJsonLd', () => {
       name: 'Erasmo da Silva Sá Junior',
       alternateName: 'Erasmo Junior',
       url: 'https://erasmossj.github.io/',
+      jobTitle: 'Computer Science student',
       affiliation: { '@type': 'CollegeOrUniversity', name: 'Universidade Federal de Alagoas' },
     });
     expect(data.sameAs).toEqual(['https://github.com/erasmossj', 'https://www.linkedin.com/in/x/']);

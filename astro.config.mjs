@@ -7,7 +7,17 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   // Site de usuário do GitHub Pages: servido na raiz, sem `base`.
   site: 'https://erasmossj.github.io',
-  integrations: [sitemap()],
+  // Português na raiz e inglês em /en/ (SCRUM-31); os textos ficam em src/lib/i18n.ts e src/data.
+  i18n: {
+    locales: ['pt', 'en'],
+    defaultLocale: 'pt',
+    routing: { prefixDefaultLocale: false },
+  },
+  integrations: [
+    sitemap({
+      i18n: { defaultLocale: 'pt', locales: { pt: 'pt-BR', en: 'en' } },
+    }),
+  ],
   // Fontes baixadas no build e servidas pelo próprio site (sem requisição a terceiros).
   fonts: [
     {

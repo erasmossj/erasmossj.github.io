@@ -1,9 +1,18 @@
-/** Dados do site usados nos metadados estruturados (subconjunto de `site` em src/data/site.ts). */
+import { defaultLang, type Lang } from './i18n.ts';
+
+/** Imagem de compartilhamento 1200×630 de cada idioma, gerada por scripts/og-image.ts. */
+export function ogImagePath(lang: Lang): string {
+  return lang === defaultLang ? '/og.png' : `/og-${lang}.png`;
+}
+
+/** Dados da pessoa nos metadados estruturados, já no idioma da página. */
 export interface PersonSource {
   name: string;
   fullName: string;
-  education: { institution: string };
-  socials: { href: string }[];
+  jobTitle: string;
+  institution: string;
+  /** Perfis em outros sites (GitHub, LinkedIn). */
+  sameAs: string[];
 }
 
 /** JSON-LD `Person` (schema.org) para os buscadores ligarem o site aos perfis do GitHub e LinkedIn. */
@@ -14,9 +23,9 @@ export function personJsonLd(source: PersonSource, siteUrl: string) {
     name: source.fullName,
     alternateName: source.name,
     url: siteUrl,
-    jobTitle: 'Estudante de Ciência da Computação',
-    affiliation: { '@type': 'CollegeOrUniversity', name: source.education.institution },
-    sameAs: source.socials.map((social) => social.href),
+    jobTitle: source.jobTitle,
+    affiliation: { '@type': 'CollegeOrUniversity', name: source.institution },
+    sameAs: source.sameAs,
   };
 }
 

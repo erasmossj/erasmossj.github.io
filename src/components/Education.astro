@@ -1,30 +1,33 @@
 ---
 import { site } from '../data/site';
+import { getLang, localize, useTranslations } from '../lib/i18n';
 
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
 const { education, competitions } = site;
 ---
 
 <div class="grid gap-6 sm:grid-cols-2">
   <article class="rounded-card border border-border bg-surface p-6">
-    <p class="font-mono text-xs text-accent">{education.period}</p>
-    <h3 class="mt-2 text-lg font-semibold tracking-tight">{education.course}</h3>
-    <p class="mt-1 text-sm text-muted">{education.institution}</p>
-    <h4 class="mt-5 text-sm font-semibold">Disciplinas com projetos neste portfólio</h4>
+    <p class="font-mono text-xs text-accent">{localize(education.period, lang)}</p>
+    <h3 class="mt-2 text-lg font-semibold tracking-tight">{localize(education.course, lang)}</h3>
+    <p class="mt-1 text-sm text-muted">{localize(education.institution, lang)}</p>
+    <h4 class="mt-5 text-sm font-semibold">{t('education.courses')}</h4>
     <ul class="mt-2 space-y-1 text-sm text-muted">
-      {education.courses.map((course) => (
+      {localize(education.courses, lang).map((course) => (
         <li>{course}</li>
       ))}
     </ul>
   </article>
 
   <article class="rounded-card border border-border bg-surface p-6">
-    <p class="font-mono text-xs text-accent">Programação competitiva</p>
-    <h3 class="mt-2 text-lg font-semibold tracking-tight">Competições</h3>
+    <p class="font-mono text-xs text-accent">{t('education.competitiveTag')}</p>
+    <h3 class="mt-2 text-lg font-semibold tracking-tight">{t('education.competitions')}</h3>
     <ul class="mt-4 space-y-4">
       {competitions.map((competition) => (
         <li>
-          <p class="text-sm font-semibold">{competition.name}</p>
-          <p class="text-sm text-muted">{competition.detail}</p>
+          <p class="text-sm font-semibold">{localize(competition.name, lang)}</p>
+          <p class="text-sm text-muted">{localize(competition.detail, lang)}</p>
         </li>
       ))}
     </ul>

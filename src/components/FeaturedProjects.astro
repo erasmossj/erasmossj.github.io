@@ -1,4 +1,5 @@
 ---
+import { getLang, useTranslations } from '../lib/i18n';
 import type { Project } from '../lib/projects';
 import ProjectCard from './ProjectCard.astro';
 
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const { projects } = Astro.props;
+const t = useTranslations(getLang(Astro.currentLocale));
 // Com o card principal ocupando uma linha inteira, um número par de projetos deixaria o último
 // sozinho na grade de 2 colunas; nesse caso ele também ocupa a linha toda.
 const lastSpansRow = projects.length > 1 && projects.length % 2 === 0;
@@ -27,5 +29,5 @@ const lastSpansRow = projects.length > 1 && projects.length % 2 === 0;
     ))}
   </ul>
 ) : (
-  <p class="text-muted">Nenhum projeto em destaque no momento.</p>
+  <p class="text-muted">{t('featured.empty')}</p>
 )}
