@@ -9,6 +9,13 @@ describe('ui', () => {
     }
   });
 
+  it('traduz todas as chaves (nenhum texto em inglês igual ao português)', () => {
+    const untranslated = (Object.keys(ui.pt) as (keyof typeof ui.pt)[]).filter(
+      (key) => ui.en[key] === ui.pt[key],
+    );
+    expect(untranslated).toEqual([]);
+  });
+
   it('usa os mesmos {campos} nas duas traduções', () => {
     const fields = (text: string) => [...text.matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort();
     for (const key of Object.keys(ui.pt) as (keyof typeof ui.pt)[]) {

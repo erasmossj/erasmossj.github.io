@@ -23,11 +23,10 @@ test('a versão em inglês não tem textos da interface em português', async ({
   await page.locator('[data-repo-list] p').evaluateAll((items) => items.forEach((p) => p.remove()));
   const html = await page.content();
 
-  // Textos fixos que mudam entre os idiomas (sem campos a preencher, para comparar literalmente).
-  // O nome "Português" aparece de propósito no seletor de idioma.
+  // Textos fixos em português (sem campos a preencher, para comparar literalmente); o teste
+  // unitário garante que nenhum deles é igual em inglês. "Português" aparece de propósito no seletor.
   const portuguese = (Object.keys(ui.pt) as (keyof typeof ui.pt)[])
-    .filter((key) => key !== 'lang.name')
-    .filter((key) => ui.pt[key] !== ui.en[key] && !ui.pt[key].includes('{'))
+    .filter((key) => key !== 'lang.name' && !ui.pt[key].includes('{'))
     .map((key) => ui.pt[key])
     .filter((text) => text.length >= 8);
   const about = site.about as { pt: string[] };
