@@ -1,15 +1,18 @@
 ---
+import { getLang, useTranslations } from '../lib/i18n';
+
 interface Props {
   class?: string;
 }
 
 const { class: className } = Astro.props;
+const t = useTranslations(getLang(Astro.currentLocale));
 ---
 
 <button
   type="button"
   data-theme-toggle
-  aria-label="Alternar tema claro/escuro"
+  aria-label={t('theme.toggle')}
   class:list={[
     'inline-flex size-10 items-center justify-center rounded-full text-muted transition-colors hover:text-accent motion-reduce:transition-none',
     className,

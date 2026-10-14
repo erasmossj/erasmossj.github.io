@@ -92,4 +92,27 @@ describe('mergeProjects', () => {
     expect(warnings).toHaveLength(1);
     expect(warnings[0]).toMatch(/apagado/);
   });
+
+  it('usa os textos da curadoria no idioma pedido e mantém os textos sem tradução', () => {
+    const config: ProjectConfig[] = [
+      {
+        repo: 'grafos',
+        featured: true,
+        order: 1,
+        title: { pt: 'Algoritmos de grafos', en: 'Graph algorithms' },
+        tagline: { pt: 'Implementações em C++.', en: 'C++ implementations.' },
+        context: 'IC/UFAL',
+      },
+    ];
+
+    const [en] = mergeProjects([repo('grafos')], config, 'en').projects;
+    const [pt] = mergeProjects([repo('grafos')], config).projects;
+
+    expect(en).toMatchObject({
+      title: 'Graph algorithms',
+      tagline: 'C++ implementations.',
+      context: 'IC/UFAL',
+    });
+    expect(pt).toMatchObject({ title: 'Algoritmos de grafos', tagline: 'Implementações em C++.' });
+  });
 });

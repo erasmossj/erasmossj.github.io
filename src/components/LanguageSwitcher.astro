@@ -1,0 +1,36 @@
+---
+import { getLang, htmlLang, languages, pathFor, ui } from '../lib/i18n';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+// Com dois idiomas, o seletor é um link para o outro.
+const target = languages.find((other) => other !== lang) ?? lang;
+---
+
+<a
+  href={pathFor(target)}
+  hreflang={htmlLang[target]}
+  lang={htmlLang[target]}
+  data-lang-switch
+  class:list={[
+    'inline-flex h-10 min-w-10 items-center justify-center rounded-full px-2 font-mono text-sm font-semibold text-muted transition-colors hover:text-accent motion-reduce:transition-none',
+    className,
+  ]}
+>
+  {target.toUpperCase()}
+  <span class="sr-only"> · {ui[target]['lang.name']}</span>
+</a>
+
+<script>
+  // Ao trocar de idioma, abre a outra versão na mesma seção que está na tela.
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('a[data-lang-switch]')) {
+    link.addEventListener('click', () => {
+      const current = document.querySelector<HTMLAnchorElement>('a[data-nav-link][aria-current]');
+      if (current && scrollY > 0) link.hash = current.hash;
+    });
+  }
+</script>

@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/site';
+import { getLang, localize, useTranslations } from '../lib/i18n';
 import type { LanguageFilter } from '../lib/languages';
 
 interface Props {
@@ -8,10 +9,12 @@ interface Props {
 }
 
 const { languages } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
 const groups = [
-  { title: 'Linguagens', items: languages.map((language) => language.name) },
-  { title: 'Ferramentas', items: site.skills.tools },
-  { title: 'Áreas de interesse', items: site.skills.interests },
+  { title: t('skills.languages'), items: languages.map((language) => language.name) },
+  { title: t('skills.tools'), items: localize(site.skills.tools, lang) },
+  { title: t('skills.interests'), items: localize(site.skills.interests, lang) },
 ];
 ---
 

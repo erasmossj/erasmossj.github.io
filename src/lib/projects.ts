@@ -1,5 +1,6 @@
 import type { ProjectConfig } from '../data/projects.config.ts';
 import type { GitHubRepo, RepoLanguage } from './github/types.ts';
+import { defaultLang, localize, type Lang } from './i18n.ts';
 
 /** Projeto pronto para exibir: dados do GitHub com a curadoria aplicada por cima. */
 export interface Project {
@@ -24,8 +25,17 @@ export interface MergeResult {
   warnings: string[];
 }
 
-/** Junta os repositórios com a curadoria; os da curadoria vêm primeiro, os demais por push recente. */
-export function mergeProjects(repos: GitHubRepo[], config: ProjectConfig[]): MergeResult {
+/**
+ * Junta os repositórios com a curadoria; os da curadoria vêm primeiro, os demais por push recente.
+ * Os textos da curadoria saem no idioma `lang`; a descrição do GitHub é usada como está.
+ */
+export function mergeProjects(
+  repos: GitHubRepo[],
+  config: ProjectConfig[],
+  lang: Lang = defaultLang,
+): MergeResult {
+  const text = (value: ProjectConfig['tagline']) =>
+    value === undefined ? undefined : localize(value, lang);
   const byRepo = new Map(config.map((entry) => [entry.repo, entry]));
   const known = new Set(repos.map((repo) => repo.name));
 
@@ -41,10 +51,10 @@ export function mergeProjects(repos: GitHubRepo[], config: ProjectConfig[]): Mer
     const entry = byRepo.get(repo.name);
     return {
       repo: repo.name,
-      title: entry?.title ?? repo.name,
-      tagline: entry?.tagline ?? repo.description,
-      context: entry?.context ?? null,
-      highlight: entry?.highlight ?? null,
+      title: text(entry?.title) ?? repo.name,
+      tagline: text(entry?.tagline) ?? repo.description,
+      context: text(entry?.context) ?? null,
+      highlight: text(entry?.highlight) ?? null,
       url: repo.url,
       demoUrl: entry?.demoUrl ?? repo.homepage,
       image: entry?.image ?? null,

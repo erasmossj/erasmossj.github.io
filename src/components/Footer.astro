@@ -1,9 +1,12 @@
 ---
 import { reposSnapshot } from '../data/repos';
 import { site } from '../data/site';
+import { getLang, intlLocale, useTranslations } from '../lib/i18n';
 
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
 const updatedAt = new Date(reposSnapshot.generatedAt);
-const updatedLabel = new Intl.DateTimeFormat('pt-BR', {
+const updatedLabel = new Intl.DateTimeFormat(intlLocale[lang], {
   dateStyle: 'long',
   timeZone: 'America/Maceio',
 }).format(updatedAt);
@@ -11,7 +14,7 @@ const updatedLabel = new Intl.DateTimeFormat('pt-BR', {
 
 <footer class="mt-12 border-t border-border pt-8 text-sm text-muted">
   <p>
-    Feito por {site.name} com Astro e Tailwind CSS. Dados do GitHub atualizados em{' '}
+    {t('footer.madeBy', { name: site.name })}{' '}
     <time datetime={reposSnapshot.generatedAt}>{updatedLabel}</time>.
   </p>
   <p class="mt-2">
@@ -21,7 +24,8 @@ const updatedLabel = new Intl.DateTimeFormat('pt-BR', {
       rel="noopener noreferrer"
       class="underline decoration-border underline-offset-4 transition-colors hover:text-accent motion-reduce:transition-none"
     >
-      Código-fonte do site<span class="sr-only"> (abre em nova aba)</span>
+      {t('footer.source')}
+      <span class="sr-only"> {t('a11y.newTab')}</span>
     </a>
   </p>
 </footer>

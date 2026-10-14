@@ -1,6 +1,11 @@
 ---
 import { site } from '../data/site';
+import { getLang, localize, useTranslations } from '../lib/i18n';
+import LanguageSwitcher from './LanguageSwitcher.astro';
 import ThemeToggle from './ThemeToggle.astro';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
 ---
 
 <div class="sticky top-0 z-40 border-b border-border bg-bg/90 backdrop-blur lg:hidden">
@@ -9,11 +14,12 @@ import ThemeToggle from './ThemeToggle.astro';
       {site.name}
     </a>
     <div class="flex items-center gap-1">
+      <LanguageSwitcher />
       <ThemeToggle />
       <details class="group relative" data-mobile-menu>
         <summary
           class="flex size-10 cursor-pointer list-none items-center justify-center rounded-full text-muted hover:text-accent [&::-webkit-details-marker]:hidden"
-          aria-label="Menu de seções"
+          aria-label={t('nav.menu')}
         >
           <svg
             class="size-6"
@@ -30,7 +36,7 @@ import ThemeToggle from './ThemeToggle.astro';
         </summary>
         <nav
           class="absolute right-0 mt-2 w-56 rounded-card border border-border bg-surface p-2 shadow-lg"
-          aria-label="Seções"
+          aria-label={t('nav.label')}
         >
           <ol>
             {site.nav.map((item, index) => (
@@ -41,7 +47,7 @@ import ThemeToggle from './ThemeToggle.astro';
                   class="flex gap-3 rounded-md px-3 py-2 text-sm text-muted hover:text-text aria-[current=location]:text-accent"
                 >
                   <span class="font-mono">{String(index + 1).padStart(2, '0')}</span>
-                  {item.label}
+                  {localize(item.label, lang)}
                 </a>
               </li>
             ))}
