@@ -49,10 +49,10 @@ export const projectsConfig = [
     repo: 'Projeto-Criptografia-RSA-Matematica-Discreta',
     featured: true,
     order: 3,
-    title: { pt: 'Criptografia RSA', en: 'RSA cryptography' },
+    title: { pt: 'Criptografia RSA', en: 'RSA Cryptography' },
     tagline: {
-      pt: 'Programa em C que criptografa e descriptografa mensagens com o algoritmo RSA.',
-      en: 'C program that encrypts and decrypts messages with the RSA algorithm.',
+      pt: 'App desktop em Qt/C++ que gera chaves e criptografa mensagens com RSA, sobre um núcleo em C com GMP.',
+      en: 'Qt/C++ desktop app that generates keys and encrypts messages with RSA, on a C core with GMP.',
     },
     context: {
       pt: 'Matemática Discreta · Prof. Bruno Pimentel · IC/UFAL',
@@ -63,7 +63,10 @@ export const projectsConfig = [
     repo: 'Segundo-Projeto-Estrutura-de-Dados-2025',
     featured: true,
     order: 4,
-    title: { pt: 'Alocação de disciplinas do IC', en: 'IC course allocation' },
+    title: {
+      pt: 'Gerador de Oferta de Disciplinas do IC/UFAL',
+      en: 'IC/UFAL Course Offering Generator',
+    },
     tagline: {
       pt: 'Programa em C que aloca a oferta de disciplinas do Instituto de Computação da UFAL.',
       en: "C program that allocates the course offering of UFAL's Institute of Computing.",
@@ -91,7 +94,7 @@ export const projectsConfig = [
     repo: 'algoritmos-de-grafos',
     featured: true,
     order: 6,
-    title: { pt: 'Algoritmos de grafos', en: 'Graph algorithms' },
+    title: { pt: 'Algoritmos de Grafos', en: 'Graph Algorithms' },
     tagline: {
       pt: 'Implementações em C++ de algoritmos clássicos de grafos.',
       en: 'C++ implementations of classic graph algorithms.',
